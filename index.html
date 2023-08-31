@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Events</title>
+</head>
+
+<body>
+    <input type="text" id="textInput" placeholder="Type something">
+    <!-- <textarea type="text" id="textarea" onkeydown="logEvent(event)" onkeypress="logEvent(event)" oninput="logEvent(event)" onchange="logEvent(event)"></textarea> -->
+    <textarea id="eventLog" rows="20" cols="100"></textarea>
+    <div id="output"></div>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const output = document.getElementById('output');
+
+        const events = [
+            'input', 'change', 'keydown', 'keyup', 'keypress',
+            'focus', 'blur', 'cut', 'copy', 'paste',
+            'select', 'contextmenu'
+        ];
+
+        events.forEach(eventName => {
+        function logEvent(event) {
+            const eventText = `${eventName}: ${event.target.value}`;
+            appendToOutput(eventText);
+            const textarea = document.getElementById('eventLog');
+            textarea.value += `${event.type} on ${event.target.id}\n`;
+            for (let prop in event) {
+                textarea.value += `\t${prop}: ${event[prop]}\n`;
+            }
+            console.log(event);
+
+        }
+            textInput.addEventListener(eventName, logEvent);
+        });
+
+        function appendToOutput(text) {
+            const eventText = document.createElement('p');
+            eventText.textContent = text;
+            output.appendChild(eventText);
+        }
+    </script>
+</body>
+
+</html>
