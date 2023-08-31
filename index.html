@@ -30,24 +30,23 @@
                 const eventText = `${eventName}: ${event.target.value}`;
                 appendToOutput(eventText);
                 const textarea = document.getElementById('eventLog');
-                textarea.value += `${event.type} on ${event.target.id}\n`;
+                textarea.value = `${event.type} on ${event.target.id}\n`;
                 for (let prop in event) {
                     textarea.value += `\t${prop}: ${event[prop]}\n`;
                 }
                 console.log(event);
-
             }
             textInput.addEventListener(eventName, logEvent);
         });
 
         btn.addEventListener('click', () => {
             textInput.focus();
-        })
+        });
 
         function appendToOutput(text) {
             const eventText = document.createElement('p');
             eventText.textContent = text;
-            output.appendChild(eventText);
+            output.prepend(eventText); // Prepend instead of append
         }
     </script>
 </body>
