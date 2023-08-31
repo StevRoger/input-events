@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <button id="focusBtn">Focus</button>
     <input type="text" id="textInput" placeholder="Type something">
     <!-- <textarea type="text" id="textarea" onkeydown="logEvent(event)" onkeypress="logEvent(event)" oninput="logEvent(event)" onchange="logEvent(event)"></textarea> -->
     <textarea id="eventLog" rows="20" cols="100"></textarea>
@@ -16,6 +17,7 @@
     <script>
         const textInput = document.getElementById('textInput');
         const output = document.getElementById('output');
+        const btn = document.getElementById('focusBtn');
 
         const events = [
             'input', 'change', 'keydown', 'keyup', 'keypress',
@@ -24,19 +26,23 @@
         ];
 
         events.forEach(eventName => {
-        function logEvent(event) {
-            const eventText = `${eventName}: ${event.target.value}`;
-            appendToOutput(eventText);
-            const textarea = document.getElementById('eventLog');
-            textarea.value += `${event.type} on ${event.target.id}\n`;
-            for (let prop in event) {
-                textarea.value += `\t${prop}: ${event[prop]}\n`;
-            }
-            console.log(event);
+            function logEvent(event) {
+                const eventText = `${eventName}: ${event.target.value}`;
+                appendToOutput(eventText);
+                const textarea = document.getElementById('eventLog');
+                textarea.value += `${event.type} on ${event.target.id}\n`;
+                for (let prop in event) {
+                    textarea.value += `\t${prop}: ${event[prop]}\n`;
+                }
+                console.log(event);
 
-        }
+            }
             textInput.addEventListener(eventName, logEvent);
         });
+
+        btn.addEventListener('click', () => {
+            textInput.focus();
+        })
 
         function appendToOutput(text) {
             const eventText = document.createElement('p');
